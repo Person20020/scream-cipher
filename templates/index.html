@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scream Cipher</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            
+        const plainToScream = {
+            'A': 'A',
+            'B': 'Ȧ',
+            'C': 'A̧',
+            'D': 'A̲',
+            'E': 'Á',
+            'F': 'A̮',
+            'G': 'A̋',
+            'H': 'A̰',
+            'I': 'Ả',
+            'J': 'A̓',
+            'K': 'Ạ',
+            'L': 'Ă',
+            'M': 'Ǎ',
+            'N': 'Â',
+            'O': 'Å',
+            'P': 'A̯',
+            'Q': 'A̤',
+            'R': 'Ȃ',
+            'S': 'Ã',
+            'T': 'Ā',
+            'U': 'Ä',
+            'V': 'À',
+            'W': 'Ȁ',
+            'X': 'A̽',
+            'Y': 'A̦',
+            'Z': 'Ⱥ'
+        }
+        const screamToPlain = {
+            'A': 'A',
+            'Ȧ': 'B',
+            'A̧': 'C',
+            'A̲': 'D',
+            'Á': 'E',
+            'A̮': 'F',
+            'A̋': 'G',
+            'A̰': 'H',
+            'Ả': 'I',
+            'A̓': 'J',
+            'Ạ': 'K',
+            'Ă': 'L',
+            'Ǎ': 'M',
+            'Â': 'N',
+            'Å': 'O',
+            'A̯': 'P',
+            'A̤': 'Q',
+            'Ȃ': 'R',
+            'Ã': 'S',
+            'Ā': 'T',
+            'Ä': 'U',
+            'À': 'V',
+            'Ȁ': 'W',
+            'A̽': 'X',
+            'A̦': 'Y',
+            'Ⱥ': 'Z'
+        }
+        const plainTextElement = document.getElementById("plainText");
+        const screamTextElement = document.getElementById("screamText");
+
+        // Translate
+        const translate = (text, map) => {
+            let translated = "";
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                if (!map.hasOwnProperty(char.toUpperCase())) {
+                    translated += char;
+                    continue;
+                }
+                upperChar = char.toUpperCase();
+                wasUppercase = char === upperChar;
+                if (wasUppercase) {
+                    translated += map[upperChar];
+                }
+                else {
+                    translated += map[upperChar].toLowerCase();
+                }
+            }
+            return translated;
+        }
+
+        // Event listeners + start translator
+        const onPlainTextChange = () => {
+            console.log("plain changed");
+            console.log(translate(plainTextElement.value, plainToScream));
+            screamTextElement.value = translate(plainTextElement.value, plainToScream);
+
+        }
+        const onScreamTextChange = () => {
+            console.log("scream changed");
+            plainTextElement.value = translate(screamTextElement.value, screamToPlain);
+        }
+        plainTextElement.addEventListener('input', onPlainTextChange);
+        screamTextElement.addEventListener('input', onScreamTextChange);
+    });
+    </script>
+</head>
+
+<body class="bg-gradient-to-l from-blue-700 to-purple-700 flex flex-col min-h-screen">
+    <div class="flex-grow">
+        <div class="text-center">
+            <br>
+            <br>
+            <br>
+
+            <h1 class="text-4xl font-bold">Scream Cipher</h1>
+            <h2 class="text-2xl">A cipher based on <a href="https://xkcd.com/3054/" class="text-gray-900 underline"> XKCD number 3054</a>.</h2>
+            <br>
+            <p class="text-lg">Enter the text that you want to translate.</p>
+        </div>
+        
+        <div class="flex flex-row justify-center bg-transparent w-full">
+            <div class="text-left flex flex-col m-2 w-1/3">
+                <label for="plainText" class="text-black">Plain Text:</label>
+                <textarea id="plainText" rows="15" class="rounded-md p-2 w-full" style="background-color: rgba(255, 255, 255, 0.5);">AAAAAA A SCARY MONSTER AAAAAA!</textarea>
+            </div>
+            <div class="text-left flex flex-col m-2 w-1/3">
+                <label for="screamText" class="text-black">Scream Cipher Text:</label>
+                <textarea id="screamText" rows="15" class="rounded-md p-2 w-full" style="background-color: rgba(255, 255, 255, 0.5);">AAAAAA A ÃA̧AȂA̦ ǍÅÂÃĀÁȂ AAAAAAA!</textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="text-center bg-indigo-900 text-white">
+            <br>
+            <p>Created by <a href="https://github.com/Person20020" class="text-gray-500 underline">@Person20020</a></p>
+            <br>
+        </div>
+    </footer>
+</body>
+</html>
